@@ -1,8 +1,22 @@
 {
   "name": "structure-ui",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "private": false,
   "type": "module",
+  "main": "./dist/structure-ui.umd.cjs",
+  "module": "./dist/structure-ui.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/structure-ui.js",
+      "require": "./dist/structure-ui.umd.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
@@ -31,5 +45,19 @@
     "vite": "^5.2.0",
     "vitest": "^4.0.5",
     "vue-tsc": "^2.0.6"
-  }
+  },
+  "description": "A UI component library for Vue 3.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/structure-ui.git"
+  },
+  "keywords": [
+    "vue",
+    "ui",
+    "components",
+    "library",
+    "tailwind"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT"
 }
