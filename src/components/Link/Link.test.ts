@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { defineComponent } from 'vue';
-import { describe, it, expect } from 'vitest';
+// Removed explicit imports for describe, it, expect, relying on vitest/globals from tsconfig.json
 import Link from './Link.vue';
 
 // Mock RouterLink since vue-router is not available in the test environment
