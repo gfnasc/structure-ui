@@ -34,6 +34,7 @@ const linkClasses = computed(() => [
   'focus:ring-offset-2',
   'disabled:opacity-50',
   'disabled:cursor-not-allowed',
+  'cursor-pointer',
   // Estilos base para links
   'text-indigo-600',
   'hover:text-indigo-800',
