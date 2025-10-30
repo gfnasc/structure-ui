@@ -12,6 +12,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
+  test: {
+    globals: true, // This makes Vitest APIs like describe, it, expect globally available
+    environment: 'jsdom', // or 'happy-dom' for browser-like environment
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
