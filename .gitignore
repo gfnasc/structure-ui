@@ -3,3 +3,7 @@
 
 # Project Files
 GEMINI.md
+
+/node_modules
+*storybook.log
+storybook-static
