@@ -1,5 +1,18 @@
 import type { Preview } from '@storybook/vue3-vite'
 import '../src/assets/main.css';
+import { setup } from '@storybook/vue3';
+import { createRouter, createWebHistory } from 'vue-router';
+
+// Create a mock router instance
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [],
+});
+
+// Register the mock router globally for all stories
+setup((app) => {
+  app.use(router);
+});
 
 const preview: Preview = {
   parameters: {
