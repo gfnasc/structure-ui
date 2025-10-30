@@ -43,7 +43,3 @@ We provide a seamless, zero-configuration integration with Nuxt.js, making it in
 ## 🚀 Getting Started
 
 > Instructions on how to install and use the library will be added here soon.
-
-## 🤝 Contributing
-
-We welcome contributions! Please read our development guidelines to get started.
