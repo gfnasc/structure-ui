@@ -20,34 +20,43 @@ const emit = defineEmits(['click']);
 const sizeClasses = computed(() => {
   switch (props.size) {
     case 'sm':
-      return 'px-2 py-1 text-sm';
+      return 'px-3 py-1.5 text-sm';
     case 'lg':
-      return 'px-6 py-3 text-lg';
+      return 'px-7 py-3.5 text-lg';
     case 'md':
     default:
-      return 'px-4 py-2 text-base';
+      return 'px-5 py-2.5 text-base';
   }
 });
 
 const variantClasses = computed(() => {
   switch (props.variant) {
     case 'secondary':
-      return 'bg-gray-500 hover:bg-gray-600 text-white';
+      return 'bg-transparent border border-slate-300 text-slate-700 hover:bg-slate-100 focus:ring-slate-500/50';
     case 'primary':
     default:
-      return 'bg-blue-500 hover:bg-blue-600 text-white';
+      return 'bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-indigo-500/50';
   }
 });
 
 const classes = computed(() => [
-  'font-bold',
-  'rounded',
-  'transition-colors',
-  'duration-300',
+  'font-semibold',
+  'rounded-lg',
+  'transition-all',
+  'duration-200',
   'focus:outline-none',
   'focus:ring-2',
-  'focus:ring-opacity-50',
-  { 'opacity-50 cursor-not-allowed': props.disabled },
+  'focus:ring-offset-2',
+  'disabled:opacity-50',
+  'disabled:cursor-not-allowed',
+  'disabled:shadow-none',
+  'disabled:transform-none',
+  'shadow-md',
+  'hover:shadow-lg',
+  'active:shadow-inner',
+  'transform',
+  'hover:-translate-y-px',
+  'active:translate-y-0',
   sizeClasses.value,
   variantClasses.value,
 ]);
