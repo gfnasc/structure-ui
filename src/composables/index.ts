@@ -1,1 +1,1 @@
-// Export all composables from here
+export * from './useStructureLazy';

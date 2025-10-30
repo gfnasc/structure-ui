@@ -1,4 +1,24 @@
 /* Design Tokens (CSS Variables) */
 :root {
-  /* Example: --color-primary: #3490dc; */
+  /* Colors */
+  --st-color-primary: #3490dc;
+  --st-color-secondary: #6574cd;
+  --st-color-success: #38c172;
+  --st-color-danger: #e3342f;
+  --st-color-warning: #ffed4a;
+  --st-color-info: #3490dc;
+  --st-color-light: #f8f8f8;
+  --st-color-dark: #333333;
+
+  /* Spacing */
+  --st-spacing-xs: 4px;
+  --st-spacing-sm: 8px;
+  --st-spacing-md: 16px;
+  --st-spacing-lg: 24px;
+  --st-spacing-xl: 32px;
+
+  /* Border Radius */
+  --st-border-radius-sm: 4px;
+  --st-border-radius-md: 8px;
+  --st-border-radius-lg: 12px;
 }
