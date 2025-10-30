@@ -13,6 +13,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
+    "allowSyntheticDefaultImports": true, // Added this line
+    "types": ["vitest/globals"], // Added this line
 
     /* Linting */
     "strict": true,
