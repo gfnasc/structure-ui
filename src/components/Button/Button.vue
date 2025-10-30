@@ -32,10 +32,10 @@ const sizeClasses = computed(() => {
 const variantClasses = computed(() => {
   switch (props.variant) {
     case 'secondary':
-      return 'bg-transparent border border-slate-300 text-slate-700 hover:bg-slate-100 focus:ring-slate-500/50';
+      return 'bg-transparent border border-slate-300 text-slate-700 hover:bg-slate-100 focus:ring-slate-300';
     case 'primary':
     default:
-      return 'bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-indigo-500/50';
+      return 'bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-indigo-500';
   }
 });
 
@@ -49,14 +49,6 @@ const classes = computed(() => [
   'focus:ring-offset-2',
   'disabled:opacity-50',
   'disabled:cursor-not-allowed',
-  'disabled:shadow-none',
-  'disabled:transform-none',
-  'shadow-md',
-  'hover:shadow-lg',
-  'active:shadow-inner',
-  'transform',
-  'hover:-translate-y-px',
-  'active:translate-y-0',
   sizeClasses.value,
   variantClasses.value,
 ]);
