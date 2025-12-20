@@ -1,47 +1,309 @@
-# 🚀 Structure-UI 🚀
+# 🏗️ StructureUI
 
-<p align="center">
-  <strong>Uma biblioteca de componentes Vue 3 de alta performance e modular, construída para velocidade e satisfação do desenvolvedor.</strong>
-</p>
+> **The Headless Behavior Engine for Vue 3 & Nuxt.**
+> Lógica complexa, Acessibilidade e Performance extrema. Zero CSS.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Vue.js-3-4FC08D?logo=vue.js" alt="Vue 3">
-  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript" alt="TypeScript">
-  <img src="https://img.shields.io/badge/Vite-5-646CFF?logo=vite" alt="Vite">
-  <img src="https://img.shields.io/badge/Tailwind_CSS-3-38B2AC?logo=tailwind-css" alt="Tailwind CSS">
-  <img src="https://img.shields.io/badge/Nuxt-3-00DC82?logo=nuxt.js" alt="Nuxt">
-</p>
+![Vue 3](https://img.shields.io/badge/Vue-3.x-green)
+![Nuxt Ready](https://img.shields.io/badge/Nuxt-Ready-00DC82)
+![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
 
-Structure-UI é uma biblioteca de componentes Vue 3 desenvolvida do zero com foco absoluto em **Core Web Vitals**, **SEO** e uma **experiência de desenvolvimento excepcional**.
+## 🌟 Por que StructureUI?
 
-Utilizando TypeScript, estilização via Tailwind CSS e empacotamento com Vite, garantimos máxima eficiência e o menor *bundle size* possível. É a escolha perfeita para quem busca performance de nível de produção.
+Desenvolver interfaces modernas é difícil. Não por causa do CSS — estilizar é a parte divertida — mas por causa do **Comportamento**:
 
-## ✨ Princípios Fundamentais
+- 😫 **Acessibilidade (a11y)**: Gerenciar Focus Traps, atributos ARIA e navegação por teclado é complexo e propenso a erros.
+- 🐌 **Performance**: Hydration Mismatches, Layout Shifts (CLS) e Main Thread Blocking (TBT) matam a experiência do usuário.
+- 🖥️ **SSR vs Client**: Sincronizar estados entre servidor e cliente sem "piscar" a tela é um desafio constante.
 
-Nosso desenvolvimento é guiado por três pilares essenciais:
+**StructureUI resolve isso.** Nós fornecemos o **Cérebro** (Lógica, Estado, Acessibilidade); você fornece a **Pele** (CSS, Tailwind, Sass).
 
-### 🏎️ 1. Performance Extrema
-Somos obcecados em construir componentes leves e extremamente rápidos. Isso é alcançado através de:
-- **Otimização LCP e CLS:** Garantindo um carregamento suave, estável e com alta pontuação nos testes de Core Web Vitals.
-- **Minimalismo JavaScript:** Componentes desenhados para serem o mais leves possível, com interatividade adicionada apenas sob demanda (*opt-in basis*).
-- **Empacotamento Eficiente:** Aproveitando o Vite e o *tree-shaking* avançado para que você entregue ao usuário **apenas o código que realmente utiliza**.
+---
 
-### 📦 2. Modularidade Total
-A Structure-UI é projetada para ser totalmente modular. Você pode importar e utilizar apenas os componentes e *composables* específicos que precisa, mantendo sua aplicação limpa, leve e "magra" (*lean and mean*).
+## 📦 Instalação
 
-### 🔌 3. Integração Nuxt Zero-Config
-Oferecemos uma integração perfeita e sem necessidade de configurações adicionais com o Nuxt.js, tornando a utilização da Structure-UI incrivelmente simples em seus projetos Nuxt.
+```bash
+npm install structure-ui
+# ou
+yarn add structure-ui
+```
 
-## 🛠️ Stack Tecnológica
+---
 
-* **Framework:** Vue 3
-* **Linguagem:** TypeScript
-* **Build Tool:** Vite (Para compilação ultra-rápida)
-* **Estilização:** Tailwind CSS (Com CSS Variables para customização facilitada)
-* **Integração:** Módulo dedicado para Nuxt 3 (Para *Developer Experience* máxima)
+## 🛠️ Composables (Hooks)
 
-## 🚀 Primeiros Passos
+A StructureUI expõe seus "superpoderes" através de composables. Aqui está o guia detalhado de como usá-los.
 
-> Em breve, as instruções detalhadas sobre como instalar e utilizar a biblioteca serão adicionadas aqui.
+### `useStructureId`
+Gera IDs únicos que são idênticos no Servidor (SSR) e no Cliente.
+
+**Assinatura:**
+```ts
+function useStructureId(prefix?: string): string
+```
+
+**Uso:**
+```vue
+<script setup>
+import { useStructureId } from 'structure-ui';
+
+// Gera algo como "input-12" (garantido ser o mesmo no server e client)
+const id = useStructureId('input');
+</script>
+
+<template>
+  <label :for="id">Nome</label>
+  <input :id="id" type="text" />
+</template>
+```
+
+---
+
+### `useIntersectionObserver`
+Detecta quando um elemento entra na viewport. Base para Lazy Loading e Analytics.
+
+**Assinatura:**
+```ts
+function useIntersectionObserver(
+  target: Ref<HTMLElement | null>,
+  options?: { threshold?: number; rootMargin?: string; once?: boolean }
+): { isIntersecting: Ref<boolean>; cleanup: () => void }
+```
+
+**Uso:**
+```vue
+<script setup>
+import { ref } from 'vue';
+import { useIntersectionObserver } from 'structure-ui';
+
+const target = ref(null);
+const { isIntersecting } = useIntersectionObserver(target, {
+  threshold: 0.5, // Dispara quando 50% estiver visível
+  once: true      // Para de observar após a primeira vez (ótimo para animações de entrada)
+});
+</script>
+```
+
+---
+
+### `useSwipe`
+Engine de gestos touch-first para interações mobile.
+
+**Assinatura:**
+```ts
+function useSwipe(
+  target: Ref<HTMLElement | null>,
+  options?: { 
+    onSwipeStart?: (e) => void; 
+    onSwipe?: (e) => void; 
+    onSwipeEnd?: (e, direction: 'UP'|'DOWN'|'LEFT'|'RIGHT') => void 
+  }
+): { isSwiping: Ref<boolean>; direction: Ref<string>; lengthX: Ref<number>; lengthY: Ref<number> }
+```
+
+**Uso:**
+```vue
+<script setup>
+import { ref } from 'vue';
+import { useSwipe } from 'structure-ui';
+
+const card = ref(null);
+const { direction } = useSwipe(card, {
+  onSwipeEnd: (e, dir) => {
+    if (dir === 'RIGHT') alert('Liked!');
+    if (dir === 'LEFT') alert('Disliked!');
+  }
+});
+</script>
+```
+
+---
+
+### `useSyncState`
+Sincroniza estado entre SSR e Client (usando `useState` do Nuxt se disponível) e opcionalmente persiste no navegador.
+
+**Assinatura:**
+```ts
+function useSyncState<T>(
+  key: string, 
+  initialValue: () => T, 
+  options?: { persistence?: 'localStorage' | 'sessionStorage' }
+): Ref<T>
+```
+
+**Uso:**
+```vue
+<script setup>
+import { useSyncState } from 'structure-ui';
+
+// Este estado será compartilhado entre componentes (se Nuxt) e salvo no localStorage
+const theme = useSyncState('theme', () => 'light', {
+  persistence: 'localStorage'
+});
+</script>
+```
+
+---
+
+### `useScrollLock`
+Trava o scroll do `body` quando um modal ou menu está aberto.
+
+**Assinatura:**
+```ts
+function useScrollLock(isLocked: Ref<boolean>): void
+```
+
+**Uso:**
+```vue
+<script setup>
+import { ref } from 'vue';
+import { useScrollLock } from 'structure-ui';
+
+const isOpen = ref(false);
+useScrollLock(isOpen); // O scroll do body trava automaticamente quando isOpen = true
+</script>
+```
+
+---
+
+### `useFocusTrap`
+Mantém o foco do teclado preso dentro de um container (essencial para Modais).
+
+**Assinatura:**
+```ts
+function useFocusTrap(target: Ref<HTMLElement | null>, isActive: Ref<boolean>): void
+```
+
+---
+
+### `useClickOutside`
+Detecta cliques fora de um elemento alvo.
+
+**Assinatura:**
+```ts
+function useClickOutside(
+  target: Ref<HTMLElement | null>, 
+  callback: () => void, 
+  isActive: Ref<boolean>
+): void
+```
+
+---
+
+## 🧩 Catálogo de Componentes (API)
+
+### `<Button>`
+Um botão acessível que gerencia estados de carregamento e desabilitação.
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `disabled` | `boolean` | `false` | Desabilita o botão e aplica `aria-disabled`. |
+| `loading` | `boolean` | `false` | Estado de carregamento. Aplica `aria-busy` e previne cliques. |
+| `type` | `string` | `'button'` | Tipo HTML (`submit`, `reset`, `button`). |
+
+**Slots:**
+- `default`: Conteúdo do botão.
+- `loading`: Conteúdo mostrado quando `loading=true` (ex: Spinner).
+
+---
+
+### `<Link>`
+Abstração inteligente que renderiza `RouterLink` (para rotas internas) ou `<a>` (para externas).
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `to` | `string` | - | Rota interna (Vue Router). |
+| `href` | `string` | - | URL externa. |
+| `external` | `boolean` | `false` | Força renderização como `<a>` com `target="_blank"`. |
+| `disabled` | `boolean` | `false` | Desabilita o link visualmente e remove a navegação. |
+
+---
+
+### `<Image>`
+Imagem com Lazy Loading nativo, prevenção de CLS e cache de sessão.
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `src` | `string` | - | URL da imagem. |
+| `width` | `number` | - | Largura intrínseca (para cálculo de aspect ratio). |
+| `height` | `number` | - | Altura intrínseca (para cálculo de aspect ratio). |
+| `loading` | `'lazy' \| 'eager'` | `'lazy'` | Estratégia de carregamento. |
+
+**Slots:**
+- `placeholder`: Mostrado enquanto a imagem não carrega/não está visível.
+- `error`: Mostrado se a imagem falhar ao carregar.
+
+---
+
+### `<Modal>` / `<Drawer>`
+Overlays completos com Focus Trap, Scroll Lock e Click Outside.
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `modelValue` | `boolean` | - | Controla visibilidade (`v-model`). |
+| `closeOnOutsideClick` | `boolean` | `true` | Fecha ao clicar no backdrop. |
+| `teleportTo` | `string` | `'body'` | Destino do Teleport. |
+
+**Slots:**
+- `default`: Recebe `{ close, titleId, descId }` no scope para facilitar a construção do conteúdo acessível.
+
+---
+
+### `<VirtualList>`
+Renderiza listas massivas com alta performance.
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `items` | `Array` | `[]` | Lista de dados. |
+| `itemHeight` | `number` | - | Altura fixa de cada item em pixels. |
+| `buffer` | `number` | `5` | Quantos itens extras renderizar fora da viewport. |
+
+**Slots:**
+- `default`: Recebe `{ item, index }` para renderizar cada linha.
+
+---
+
+### `<LazyHydrate>`
+Adia a hidratação de componentes pesados.
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `whenVisible` | `boolean` | `false` | Hidrata quando entra na viewport. |
+| `whenIdle` | `boolean` | `false` | Hidrata quando o navegador está ocioso. |
+| `ssr` | `boolean` | `false` | Se `true`, renderiza no server (mas não hidrata JS até o gatilho). |
+
+**Slots:**
+- `default`: O componente pesado.
+- `placeholder`: O que mostrar antes da hidratação.
+
+---
+
+## 🛡️ Boas Práticas & Performance
+
+### 1. Evite Hydration Mismatch
+Nunca use `Math.random()` ou contadores simples para gerar IDs em componentes SSR.
+**Solução:** Use sempre `useStructureId`.
+
+### 2. Otimize o First Paint
+Imagens sem dimensões causam "pulos" na tela (CLS). O componente `<Image>` da StructureUI força a reserva de espaço se você passar `width` e `height`.
+
+### 3. Adie o Javascript Pesado
+Se você tem um componente pesado (ex: Mapa, Comentários) que não está visível inicialmente, não hidrate ele no boot. Use `<LazyHydrate>`.
+
+---
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Por favor, leia nosso guia de contribuição antes de enviar um PR.
+
+1. Fork o projeto
+2. Crie sua Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a Branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+---
+
+**StructureUI** — Construído para a próxima geração de apps Vue.js.
