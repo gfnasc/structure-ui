@@ -69,7 +69,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="root" class="contents">
+  <!-- Removed 'contents' class to ensure IntersectionObserver works -->
+  <div ref="root">
     <slot v-if="shouldRender" />
     <slot v-else name="placeholder" />
   </div>
