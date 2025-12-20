@@ -5,6 +5,13 @@ import { fileURLToPath } from 'url';
 
 const config: StorybookConfig = {
   "stories": [
+    // MDX patterns removed to prevent mdx-react-shim error
+    // "../src/*.mdx",
+    // "../src/stories/*.mdx",
+    
+    // Include the new Vue-based Introduction story
+    "../src/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    
     "../src/components/**/*.mdx",
     "../src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
@@ -21,8 +28,6 @@ const config: StorybookConfig = {
     return mergeConfig(config, {
       resolve: {
         alias: {
-          // Removed the alias for useStructureLazy to enable actual lazy loading in Storybook
-          // '../../composables/useStructureLazy': path.resolve(__dirname, '../src/composables/useStructureLazy/useStructureLazy.storybook.ts'),
         },
       },
     });
