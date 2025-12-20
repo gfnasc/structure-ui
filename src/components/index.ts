@@ -3,3 +3,4 @@ export * from './Link';
 export * from './Image';
 export * from './Icon';
 export * from './LazyHydrate';
+export * from './AsyncBoundary';

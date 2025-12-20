@@ -31,6 +31,7 @@
 import { computed, ref, type Ref, type CSSProperties } from 'vue';
 import { useStructureLazy } from '../../composables/useStructureLazy';
 import { useStructureId } from '../../composables/useStructureId';
+import { useHydrationCheck } from '../../composables/useHydrationCheck';
 
 interface ImageProps {
   src: string;
@@ -46,6 +47,10 @@ const props = withDefaults(defineProps<ImageProps>(), {
 
 const elementId = useStructureId('img');
 const imageRoot: Ref<HTMLElement | null> = ref(null);
+
+// DEV ONLY: Check for hydration mismatches
+useHydrationCheck(imageRoot, elementId, 'Image');
+
 const { isVisible: lazyVisible }: { isVisible: Ref<boolean> } = useStructureLazy(imageRoot);
 
 const isVisible = computed(() => {
