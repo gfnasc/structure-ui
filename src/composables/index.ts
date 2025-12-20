@@ -5,3 +5,6 @@ export * from './useHydrationCheck';
 export * from './useScrollLock';
 export * from './useFocusTrap';
 export * from './useClickOutside';
+export * from './useIntersectionObserver';
+export * from './useSwipe';
+export * from './useSyncState';
