@@ -391,4 +391,4 @@ Contribuições são bem-vindas! Por favor, leia nosso guia de contribuição an
 
 ---
 
-**StructureUI** — Infraestrutura para o futuro do Nuxt.
+**StructureUI** — Built for Nuxt.
