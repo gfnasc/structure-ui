@@ -12,6 +12,7 @@
         :width="width"
         :height="height"
         :loading="loading"
+        @load="handleLoad"
         @error="handleImageError"
         :style="imageStyle"
       />
@@ -32,6 +33,10 @@ import { computed, ref, type Ref, type CSSProperties } from 'vue';
 import { useStructureLazy } from '../../composables/useStructureLazy';
 import { useStructureId } from '../../composables/useStructureId';
 import { useHydrationCheck } from '../../composables/useHydrationCheck';
+
+// Global cache to track loaded images across the SPA session
+// This prevents unnecessary lazy-loading delays for images already seen
+const loadedImages = new Set<string>();
 
 interface ImageProps {
   src: string;
@@ -55,6 +60,8 @@ const { isVisible: lazyVisible }: { isVisible: Ref<boolean> } = useStructureLazy
 
 const isVisible = computed(() => {
   if (props.loading === 'eager') return true;
+  // Optimization: If image was already loaded in this session, show immediately
+  if (loadedImages.has(props.src)) return true;
   return lazyVisible.value;
 });
 
@@ -62,6 +69,10 @@ const hasError = ref(false);
 
 const handleImageError = () => {
   hasError.value = true;
+};
+
+const handleLoad = () => {
+  loadedImages.add(props.src);
 };
 
 // CLS Zero: Container style

@@ -4,11 +4,13 @@ import { useStructureId } from '../../composables/useStructureId';
 interface Props {
   id?: string;
   disabled?: boolean;
+  loading?: boolean;
   type?: 'submit' | 'button' | 'reset';
 }
 
 const props = withDefaults(defineProps<Props>(), {
   disabled: false,
+  loading: false,
   type: 'button',
 });
 
@@ -19,7 +21,7 @@ const emit = defineEmits<{
 const elementId = props.id || useStructureId('btn');
 
 function handleClick(event: MouseEvent) {
-  if (!props.disabled) {
+  if (!props.disabled && !props.loading) {
     emit('click', event);
   }
 }
@@ -29,10 +31,15 @@ function handleClick(event: MouseEvent) {
   <button
     :id="elementId"
     :type="type"
-    :disabled="disabled"
-    :aria-disabled="disabled ? 'true' : undefined"
+    :disabled="disabled || loading"
+    :aria-disabled="disabled || loading ? 'true' : undefined"
+    :aria-busy="loading ? 'true' : undefined"
     @click="handleClick"
   >
-    <slot />
+    <slot v-if="loading" name="loading">
+      <!-- Default loading text if no slot provided -->
+      Loading...
+    </slot>
+    <slot v-else />
   </button>
 </template>
