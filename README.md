@@ -1,35 +1,40 @@
 # 🏗️ StructureUI
 
-> **The Headless Behavior Engine for Vue 3 & Nuxt.**
-> Lógica complexa, Acessibilidade e Performance extrema. Zero CSS.
+> **The Headless Behavior Engine for Nuxt.**
+> Infraestrutura de UI para aplicações de escala. Zero CSS. Zero Runtime Overhead.
 
-![Vue 3](https://img.shields.io/badge/Vue-3.x-green)
-![Nuxt Ready](https://img.shields.io/badge/Nuxt-Ready-00DC82)
-![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+![Nuxt Ready](https://img.shields.io/badge/Nuxt-Ready-00DC82?style=flat-square&logo=nuxt.js&logoColor=white)
+![Vue 3](https://img.shields.io/badge/Vue-3.x-4FC08D?style=flat-square&logo=vue.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
 ---
 
-## 🌟 Por que StructureUI?
+## 📜 Filosofia de Engenharia
 
-Você já passou por isso: começa um projeto novo e precisa de um Modal.
-1. Você instala uma lib de UI famosa 📦.
-2. O Modal vem com estilos que não batem com seu design 🎨.
-3. Você perde horas sobrescrevendo CSS com `!important` ⚔️.
-4. O bundle size aumenta em 500kb 📉.
-5. O Lighthouse reclama de acessibilidade e TBT 🚨.
+No desenvolvimento de produtos digitais, a velocidade e a qualidade da experiência do usuário não são negociáveis. No entanto, as ferramentas que usamos muitas vezes nos forçam a um dilema: **agilidade vs. performance**.
 
-**A StructureUI inverte esse jogo.**
+### O "Imposto" das Bibliotecas de UI Tradicionais
 
-Nós acreditamos que **Comportamento** e **Estilo** devem ser separados.
-- **Nós cuidamos da Engenharia**: Focus traps, portais, sincronização SSR, lazy hydration, virtualização e ARIA attributes.
-- **Você cuida da Arte**: Use Tailwind, CSS Modules, Sass ou Styled Components. Sem conflitos, sem overrides.
+Bibliotecas de UI convencionais prometem acelerar o desenvolvimento, mas cobram um "imposto" caro e silencioso:
 
-### O que você ganha "de graça":
-- 🛡️ **Segurança SSR**: Seus IDs nunca mais vão quebrar a hidratação do Nuxt.
-- ⚡ **Performance Nativa**: Componentes que sabem quando carregar (Lazy) e como renderizar listas infinitas (Virtual).
-- ♿ **Acessibilidade de Elite**: Navegação por teclado e leitores de tela funcionam "out of the box".
-- 🧩 **Liberdade Total**: Mude seu Design System inteiro sem tocar na lógica dos componentes.
+1.  **O Imposto do Estilo (Style Tax)**: Você importa um componente "pronto" e passa 80% do tempo lutando contra o CSS dele. Classes são sobrescritas, a especificidade se torna uma guerra e `!important` vira seu último recurso. **Sua criatividade é limitada pelo Design System de outra pessoa.**
+
+2.  **O Imposto da Performance (Performance Tax)**: Componentes "tudo-em-um" trazem centenas de kilobytes de CSS e JavaScript que você não usa. O resultado? Um **Total Blocking Time (TBT)** alto, um **Cumulative Layout Shift (CLS)** desastroso e uma péssima nota no Lighthouse que prejudica seu SEO.
+
+3.  **O Imposto do Framework (Framework Tax)**: Componentes que não foram projetados para SSR quebram a hidratação no Nuxt, causando "flickering", perda de estado e uma experiência de usuário inconsistente entre o servidor e o cliente.
+
+### A Solução: Separar Comportamento de Estilo
+
+**A StructureUI é diferente.** Nós não somos um UI Kit. Somos uma **Engine de Comportamento**.
+
+Nossa filosofia é simples: **Comportamento é Infraestrutura, Estilo é Arte.**
+
+- **Nós cuidamos da Engenharia**: Entregamos a lógica complexa, testada e performática para componentes como Modais, Listas Virtualizadas e Popovers. Focus traps, portais, sincronização SSR, lazy hydration e atributos ARIA são nossa responsabilidade.
+
+- **Você cuida da Arte**: Entregamos componentes "pelados" (Headless) — esqueletos funcionais e acessíveis. Você os veste com seu Design System, seja ele Tailwind, UnoCSS, Sass ou CSS-in-JS. Sem conflitos, sem overrides, sem `!important`.
+
+O resultado é uma base de código mais limpa, performática e infinitamente mais flexível.
 
 ---
 
@@ -43,9 +48,97 @@ yarn add structure-ui
 
 ---
 
+## 🧩 Catálogo de Componentes (API)
+
+### `<Button>`
+Um botão acessível que gerencia estados de carregamento e desabilitação.
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `disabled` | `boolean` | `false` | Desabilita o botão e aplica `aria-disabled`. |
+| `loading` | `boolean` | `false` | Estado de carregamento. Aplica `aria-busy` e previne cliques. |
+| `type` | `string` | `'button'` | Tipo HTML (`submit`, `reset`, `button`). |
+
+**Slots:**
+- `default`: Conteúdo do botão.
+- `loading`: Conteúdo mostrado quando `loading=true` (ex: Spinner).
+
+---
+
+### `<Link>`
+Abstração inteligente compatível com o roteamento do Nuxt (`NuxtLink`) ou links externos (`<a>`).
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `to` | `string` | - | Rota interna (Nuxt Router). |
+| `href` | `string` | - | URL externa. |
+| `external` | `boolean` | `false` | Força renderização como `<a>` com `target="_blank"`. |
+| `disabled` | `boolean` | `false` | Desabilita o link visualmente e remove a navegação. |
+
+---
+
+### `<Image>`
+Imagem com Lazy Loading nativo, prevenção de CLS e cache de sessão.
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `src` | `string` | - | URL da imagem. |
+| `width` | `number` | - | Largura intrínseca (para cálculo de aspect ratio). |
+| `height` | `number` | - | Altura intrínseca (para cálculo de aspect ratio). |
+| `loading` | `'lazy' \| 'eager'` | `'lazy'` | Estratégia de carregamento. |
+
+**Slots:**
+- `placeholder`: Mostrado enquanto a imagem não carrega/não está visível.
+- `error`: Mostrado se a imagem falhar ao carregar.
+
+---
+
+### `<Modal>` / `<Drawer>`
+Overlays completos com Focus Trap, Scroll Lock e Click Outside.
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `modelValue` | `boolean` | - | Controla visibilidade (`v-model`). |
+| `closeOnOutsideClick` | `boolean` | `true` | Fecha ao clicar no backdrop. |
+| `teleportTo` | `string` | `'body'` | Destino do Teleport. |
+
+**Slots:**
+- `default`: Recebe `{ close, titleId, descId }` no scope para facilitar a construção do conteúdo acessível.
+
+---
+
+### `<VirtualList>`
+Renderiza listas massivas com alta performance.
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `items` | `Array` | `[]` | Lista de dados. |
+| `itemHeight` | `number` | - | Altura fixa de cada item em pixels. |
+| `buffer` | `number` | `5` | Quantos itens extras renderizar fora da viewport. |
+
+**Slots:**
+- `default`: Recebe `{ item, index }` para renderizar cada linha.
+
+---
+
+### `<LazyHydrate>`
+Adia a hidratação de componentes pesados.
+
+| Prop | Tipo | Default | Descrição |
+|------|------|---------|-----------|
+| `whenVisible` | `boolean` | `false` | Hidrata quando entra na viewport. |
+| `whenIdle` | `boolean` | `false` | Hidrata quando o navegador está ocioso. |
+| `ssr` | `boolean` | `false` | Se `true`, renderiza no server (mas não hidrata JS até o gatilho). |
+
+**Slots:**
+- `default`: O componente pesado.
+- `placeholder`: O que mostrar antes da hidratação.
+
+---
+
 ## 🛠️ Composables (Hooks)
 
-A StructureUI expõe seus "superpoderes" através de composables. Aqui está o guia detalhado de como usá-los.
+A StructureUI expõe seus "superpoderes" através de composables otimizados para Nuxt.
 
 ### `useStructureId`
 Gera IDs únicos que são idênticos no Servidor (SSR) e no Cliente.
@@ -149,7 +242,7 @@ function useSyncState<T>(
 <script setup>
 import { useSyncState } from 'structure-ui';
 
-// Este estado será compartilhado entre componentes (se Nuxt) e salvo no localStorage
+// Este estado será compartilhado entre componentes (via Nuxt useState) e salvo no localStorage
 const theme = useSyncState('theme', () => 'light', {
   persistence: 'localStorage'
 });
@@ -203,103 +296,18 @@ function useClickOutside(
 
 ---
 
-## 🧩 Catálogo de Componentes (API)
+## 🛡️ Guia de Performance & SSR (Sobrevivência Nuxt)
 
-### `<Button>`
-Um botão acessível que gerencia estados de carregamento e desabilitação.
-
-| Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------|
-| `disabled` | `boolean` | `false` | Desabilita o botão e aplica `aria-disabled`. |
-| `loading` | `boolean` | `false` | Estado de carregamento. Aplica `aria-busy` e previne cliques. |
-| `type` | `string` | `'button'` | Tipo HTML (`submit`, `reset`, `button`). |
-
-**Slots:**
-- `default`: Conteúdo do botão.
-- `loading`: Conteúdo mostrado quando `loading=true` (ex: Spinner).
-
----
-
-### `<Link>`
-Abstração inteligente que renderiza `RouterLink` (para rotas internas) ou `<a>` (para externas).
-
-| Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------|
-| `to` | `string` | - | Rota interna (Vue Router). |
-| `href` | `string` | - | URL externa. |
-| `external` | `boolean` | `false` | Força renderização como `<a>` com `target="_blank"`. |
-| `disabled` | `boolean` | `false` | Desabilita o link visualmente e remove a navegação. |
-
----
-
-### `<Image>`
-Imagem com Lazy Loading nativo, prevenção de CLS e cache de sessão.
-
-| Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------|
-| `src` | `string` | - | URL da imagem. |
-| `width` | `number` | - | Largura intrínseca (para cálculo de aspect ratio). |
-| `height` | `number` | - | Altura intrínseca (para cálculo de aspect ratio). |
-| `loading` | `'lazy' \| 'eager'` | `'lazy'` | Estratégia de carregamento. |
-
-**Slots:**
-- `placeholder`: Mostrado enquanto a imagem não carrega/não está visível.
-- `error`: Mostrado se a imagem falhar ao carregar.
-
----
-
-### `<Modal>` / `<Drawer>`
-Overlays completos com Focus Trap, Scroll Lock e Click Outside.
-
-| Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------|
-| `modelValue` | `boolean` | - | Controla visibilidade (`v-model`). |
-| `closeOnOutsideClick` | `boolean` | `true` | Fecha ao clicar no backdrop. |
-| `teleportTo` | `string` | `'body'` | Destino do Teleport. |
-
-**Slots:**
-- `default`: Recebe `{ close, titleId, descId }` no scope para facilitar a construção do conteúdo acessível.
-
----
-
-### `<VirtualList>`
-Renderiza listas massivas com alta performance.
-
-| Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------|
-| `items` | `Array` | `[]` | Lista de dados. |
-| `itemHeight` | `number` | - | Altura fixa de cada item em pixels. |
-| `buffer` | `number` | `5` | Quantos itens extras renderizar fora da viewport. |
-
-**Slots:**
-- `default`: Recebe `{ item, index }` para renderizar cada linha.
-
----
-
-### `<LazyHydrate>`
-Adia a hidratação de componentes pesados.
-
-| Prop | Tipo | Default | Descrição |
-|------|------|---------|-----------|
-| `whenVisible` | `boolean` | `false` | Hidrata quando entra na viewport. |
-| `whenIdle` | `boolean` | `false` | Hidrata quando o navegador está ocioso. |
-| `ssr` | `boolean` | `false` | Se `true`, renderiza no server (mas não hidrata JS até o gatilho). |
-
-**Slots:**
-- `default`: O componente pesado.
-- `placeholder`: O que mostrar antes da hidratação.
-
----
-
-## 🛡️ Guia de Engenharia & Boas Práticas
-
-### 1. Hydration Safety (O Fim do "Piscar")
-O erro mais comum em SSR é gerar IDs aleatórios (`Math.random()`) no setup. Isso faz o servidor renderizar `id="123"` e o cliente `id="456"`, causando erros de hidratação e quebra de acessibilidade.
+### 1. Hydration Safety: O Fim do "Piscar"
+O erro mais comum em SSR é gerar IDs aleatórios (`Math.random()`) no setup. Isso faz o servidor renderizar `id="123"` e o cliente `id="456"`, causando erros de hidratação no Nuxt.
 
 **✅ A Solução:** Use sempre `useStructureId`.
 ```js
-// Garante que o ID seja o mesmo no Server e no Client
-const inputId = useStructureId('field'); 
+// ❌ ERRADO: Isso quebra a hidratação do Nuxt
+const id = Math.random().toString(36); 
+
+// ✅ CERTO: Isso gera um ID estável e único
+const id = useStructureId('field');
 ```
 
 ### 2. Core Web Vitals: CLS Zero
@@ -331,8 +339,35 @@ Renderizar 5.000 linhas no DOM trava qualquer navegador. Paginação é uma solu
 <VirtualList :items="bigData" :itemHeight="50" />
 ```
 
-### 5. Acessibilidade "Invisível"
-Ao criar componentes customizados, nunca remova o outline de foco sem fornecer uma alternativa visual clara.
+---
+
+## ♿ Boas Práticas de Acessibilidade (a11y)
+
+### 1. Rótulos Descritivos
+Ícones e botões sem texto são invisíveis para leitores de tela.
+
+**✅ A Solução:** Use `aria-label` nos componentes `<Icon>` e `<Link>`.
+```html
+<Button aria-label="Fechar janela">
+  <Icon name="close" />
+</Button>
+```
+
+### 2. Hierarquia de Títulos em Modais
+Um modal deve ter um título claro para dar contexto ao usuário.
+
+**✅ A Solução:** O slot do `<Modal>` expõe `titleId` e `descId` para você conectar.
+```vue
+<Modal v-model="isOpen">
+  <template #default="{ titleId, descId }">
+    <h2 :id="titleId">Confirmação</h2>
+    <p :id="descId">Tem certeza?</p>
+  </template>
+</Modal>
+```
+
+### 3. Foco Visível
+Nunca remova o `outline` de foco sem fornecer uma alternativa.
 
 **✅ A Solução:** Use classes de utilidade para gerenciar o foco.
 ```html
@@ -356,4 +391,4 @@ Contribuições são bem-vindas! Por favor, leia nosso guia de contribuição an
 
 ---
 
-**StructureUI** — Construído para a próxima geração de apps Vue.js.
+**StructureUI** — Infraestrutura para o futuro do Nuxt.
