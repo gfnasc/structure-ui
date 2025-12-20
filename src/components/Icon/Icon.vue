@@ -10,9 +10,10 @@
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    :aria-hidden="ariaLabel ? undefined : true"
-    :aria-label="ariaLabel"
+    :aria-hidden="!ariaLabel"
+    :aria-labelledby="ariaLabel ? titleId : undefined"
   >
+    <title v-if="ariaLabel" :id="titleId">{{ ariaLabel }}</title>
     <path :d="pathData" />
   </svg>
   <span v-else>[Invalid Icon: {{ name }}]</span>
@@ -21,6 +22,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { icons, type IconName } from './icons';
+import { useStructureId } from '../../composables/useStructureId';
 
 interface IconProps {
   name: IconName;
@@ -33,6 +35,8 @@ const props = withDefaults(defineProps<IconProps>(), {
   size: 24,
   color: 'currentColor',
 });
+
+const titleId = useStructureId('icon-title');
 
 const pathData = computed(() => {
   return icons[props.name] || null;

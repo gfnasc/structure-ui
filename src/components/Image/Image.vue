@@ -1,5 +1,6 @@
 <template>
   <div
+    :id="elementId"
     ref="imageRoot"
     :style="containerStyle"
   >
@@ -10,7 +11,7 @@
         :alt="alt"
         :width="width"
         :height="height"
-        loading="lazy"
+        :loading="loading"
         @error="handleImageError"
         :style="imageStyle"
       />
@@ -29,18 +30,28 @@
 <script setup lang="ts">
 import { computed, ref, type Ref, type CSSProperties } from 'vue';
 import { useStructureLazy } from '../../composables/useStructureLazy';
+import { useStructureId } from '../../composables/useStructureId';
 
 interface ImageProps {
   src: string;
   alt: string;
   width?: number;
   height?: number;
+  loading?: 'lazy' | 'eager';
 }
 
-const props = defineProps<ImageProps>();
+const props = withDefaults(defineProps<ImageProps>(), {
+  loading: 'lazy',
+});
 
+const elementId = useStructureId('img');
 const imageRoot: Ref<HTMLElement | null> = ref(null);
-const { isVisible }: { isVisible: Ref<boolean> } = useStructureLazy(imageRoot);
+const { isVisible: lazyVisible }: { isVisible: Ref<boolean> } = useStructureLazy(imageRoot);
+
+const isVisible = computed(() => {
+  if (props.loading === 'eager') return true;
+  return lazyVisible.value;
+});
 
 const hasError = ref(false);
 

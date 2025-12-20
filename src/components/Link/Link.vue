@@ -2,8 +2,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useStructureId } from '../../composables/useStructureId';
 
 interface Props {
+  id?: string;
   to?: string;
   href?: string;
   external?: boolean;
@@ -15,6 +17,8 @@ const props = withDefaults(defineProps<Props>(), {
   external: false,
   disabled: false,
 });
+
+const elementId = props.id || useStructureId('link');
 
 const isExternal = computed(() => {
   return props.href !== undefined || props.external;
@@ -28,6 +32,7 @@ const isRouterLink = computed(() => {
 <template>
   <component
     :is="isRouterLink ? RouterLink : 'a'"
+    :id="elementId"
     :to="isRouterLink ? to : undefined"
     :href="isExternal ? href || to : undefined"
     :target="isExternal ? '_blank' : undefined"
