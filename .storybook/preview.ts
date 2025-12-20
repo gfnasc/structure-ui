@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/vue3-vite'
-// CSS removed for Headless transition
+import '../src/styles/storybook.css'; // Import Tailwind for Storybook examples
 import { setup } from '@storybook/vue3';
 import { createRouter, createWebHistory } from 'vue-router';
 
