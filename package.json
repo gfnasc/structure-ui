@@ -1,6 +1,6 @@
 {
   "name": "structure-ui",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "private": false,
   "type": "module",
   "main": "./dist/structure-ui.umd.cjs",
