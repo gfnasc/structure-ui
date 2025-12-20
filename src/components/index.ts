@@ -4,3 +4,7 @@ export * from './Image';
 export * from './Icon';
 export * from './LazyHydrate';
 export * from './AsyncBoundary';
+export * from './Modal';
+export * from './Drawer';
+export * from './Popover';
+export * from './VirtualList';
