@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/vue3-vite'
-import '../src/assets/main.css';
+// CSS removed for Headless transition
 import { setup } from '@storybook/vue3';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -28,7 +28,12 @@ const preview: Preview = {
       // 'error' - fail CI on a11y violations
       // 'off' - skip a11y checks entirely
       test: 'todo'
-    }
+    },
+    docs: {
+      source: {
+        type: 'code',
+      },
+    },
   },
 };
 

@@ -15,7 +15,7 @@
   >
     <path :d="pathData" />
   </svg>
-  <span v-else class="text-red-500">[Invalid Icon]</span>
+  <span v-else>[Invalid Icon: {{ name }}]</span>
 </template>
 
 <script setup lang="ts">

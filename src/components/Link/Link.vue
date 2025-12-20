@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 <script setup lang="ts">
 import { computed } from 'vue';
-import { RouterLink } from 'vue-router'; // Assumindo que vue-router está instalado
+import { RouterLink } from 'vue-router';
 
 interface Props {
   to?: string;
@@ -23,23 +23,6 @@ const isExternal = computed(() => {
 const isRouterLink = computed(() => {
   return props.to !== undefined && !props.disabled && !isExternal.value;
 });
-
-const linkClasses = computed(() => [
-  'font-semibold',
-  'rounded-lg',
-  'transition-all',
-  'duration-200',
-  'focus:outline-none',
-  'focus:ring-2',
-  'focus:ring-offset-2',
-  'disabled:opacity-50',
-  'disabled:cursor-not-allowed',
-  'cursor-pointer',
-  // Estilos base para links
-  'text-indigo-600',
-  'hover:text-indigo-800',
-  'focus:ring-indigo-500',
-]);
 </script>
 
 <template>
@@ -50,8 +33,8 @@ const linkClasses = computed(() => [
     :target="isExternal ? '_blank' : undefined"
     :rel="isExternal ? 'noopener noreferrer' : undefined"
     :aria-label="ariaLabel"
-    :class="linkClasses"
-    :disabled="disabled"
+    :aria-disabled="disabled ? 'true' : undefined"
+    :role="disabled ? 'link' : undefined"
   >
     <slot />
   </component>
