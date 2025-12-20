@@ -1,0 +1,7 @@
+yarn build
+
+npm version minor
+# ou
+yarn version --minor
+
+npm publish --access public

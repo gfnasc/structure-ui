@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick, type Ref, type CSSProperties, watch } from 'vue';
+import { ref, onUnmounted, nextTick, type Ref, type CSSProperties, watch } from 'vue';
 import { useClickOutside } from '../../composables/useClickOutside';
 import { useClientOnly } from '../../composables/useClientOnly';
 

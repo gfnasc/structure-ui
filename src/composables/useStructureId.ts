@@ -1,5 +1,3 @@
-import { ref } from 'vue';
-
 /**
  * Generates a deterministic ID that is stable across Server (SSR) and Client (Hydration).
  * Uses Nuxt's `useState` if available to synchronize the ID counter.

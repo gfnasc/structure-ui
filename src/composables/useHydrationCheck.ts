@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { onMounted, type Ref } from 'vue';
 
 /**

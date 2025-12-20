@@ -1,12 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { defineComponent } from 'vue';
 import Link from './Link.vue';
-
-// Mock RouterLink for Storybook
-const RouterLinkStub = defineComponent({
-  props: ['to'],
-  template: '<a :href="to"><slot /></a>',
-});
 
 const meta: Meta<typeof Link> = {
   component: Link,

@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T">
-import { ref, computed, onMounted, onUnmounted, type Ref } from 'vue';
+import { ref, computed, onMounted, type Ref, type CSSProperties } from 'vue';
 
 interface Props<T> {
   items: T[];
@@ -42,7 +42,7 @@ const visibleItems = computed(() => {
       width: '100%',
       height: `${props.itemHeight}px`,
       transform: `translateY(${(startIndex.value + index) * props.itemHeight}px)`,
-    },
+    } as CSSProperties,
   }));
 });
 

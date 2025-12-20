@@ -1,4 +1,4 @@
-import { ref, watch, onMounted, type Ref } from 'vue';
+import { ref, watch, type Ref } from 'vue';
 
 export interface SyncStateOptions {
   persistence?: 'localStorage' | 'sessionStorage';

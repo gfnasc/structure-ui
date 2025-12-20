@@ -3,7 +3,7 @@ import VirtualList from './VirtualList.vue';
 import Button from '../Button/Button.vue';
 
 const meta: Meta<typeof VirtualList> = {
-  component: VirtualList,
+  component: VirtualList as any, // Cast to any to avoid generic type issues in Storybook
   title: 'Components/VirtualList',
   tags: ['autodocs'],
   argTypes: {

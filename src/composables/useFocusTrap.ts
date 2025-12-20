@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, watch, nextTick, type Ref } from 'vue';
+import { onUnmounted, watch, nextTick, type Ref } from 'vue';
 
 export function useFocusTrap(elementRef: Ref<HTMLElement | null>, isActive: Ref<boolean>) {
   if (typeof window === 'undefined') return;
