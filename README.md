@@ -291,17 +291,56 @@ Adia a hidratação de componentes pesados.
 
 ---
 
-## 🛡️ Boas Práticas & Performance
+## 🛡️ Guia de Engenharia & Boas Práticas
 
-### 1. Evite Hydration Mismatch
-Nunca use `Math.random()` ou contadores simples para gerar IDs em componentes SSR.
-**Solução:** Use sempre `useStructureId`.
+### 1. Hydration Safety (O Fim do "Piscar")
+O erro mais comum em SSR é gerar IDs aleatórios (`Math.random()`) no setup. Isso faz o servidor renderizar `id="123"` e o cliente `id="456"`, causando erros de hidratação e quebra de acessibilidade.
 
-### 2. Otimize o First Paint
-Imagens sem dimensões causam "pulos" na tela (CLS). O componente `<Image>` da StructureUI força a reserva de espaço se você passar `width` e `height`.
+**✅ A Solução:** Use sempre `useStructureId`.
+```js
+// Garante que o ID seja o mesmo no Server e no Client
+const inputId = useStructureId('field'); 
+```
 
-### 3. Adie o Javascript Pesado
-Se você tem um componente pesado (ex: Mapa, Comentários) que não está visível inicialmente, não hidrate ele no boot. Use `<LazyHydrate>`.
+### 2. Core Web Vitals: CLS Zero
+Imagens sem dimensões explícitas empurram o conteúdo para baixo quando carregam, destruindo sua pontuação de CLS (Cumulative Layout Shift).
+
+**✅ A Solução:** O componente `<Image>` usa a técnica de "Aspect Ratio Box". Sempre forneça `width` e `height`.
+```html
+<!-- Reserva o espaço exato antes mesmo de baixar 1 byte da imagem -->
+<Image src="/banner.jpg" :width="1920" :height="600" />
+```
+
+### 3. Gerenciamento da Main Thread (TBT)
+Hidratar componentes pesados (como Mapas, Carrosséis complexos ou Gráficos) no carregamento inicial bloqueia a thread principal, deixando a página não interativa.
+
+**✅ A Solução:** Use `<LazyHydrate>` para adiar a hidratação até que seja estritamente necessário.
+```html
+<!-- Só carrega o JS do mapa quando o usuário rolar até ele -->
+<LazyHydrate whenVisible>
+  <GoogleMaps />
+</LazyHydrate>
+```
+
+### 4. Virtualização vs Paginação
+Renderizar 5.000 linhas no DOM trava qualquer navegador. Paginação é uma solução, mas Scroll Infinito é melhor para UX em feeds.
+
+**✅ A Solução:** Use `<VirtualList>` para renderizar apenas o que está na tela.
+```html
+<!-- Renderiza apenas ~10 itens no DOM, mesmo com 10.000 itens na lista -->
+<VirtualList :items="bigData" :itemHeight="50" />
+```
+
+### 5. Acessibilidade "Invisível"
+Ao criar componentes customizados, nunca remova o outline de foco sem fornecer uma alternativa visual clara.
+
+**✅ A Solução:** Use classes de utilidade para gerenciar o foco.
+```html
+<!-- Tailwind example -->
+<button class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+  Acessível e Bonito
+</button>
+```
 
 ---
 
