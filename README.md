@@ -12,13 +12,24 @@
 
 ## 🌟 Por que StructureUI?
 
-Desenvolver interfaces modernas é difícil. Não por causa do CSS — estilizar é a parte divertida — mas por causa do **Comportamento**:
+Você já passou por isso: começa um projeto novo e precisa de um Modal.
+1. Você instala uma lib de UI famosa 📦.
+2. O Modal vem com estilos que não batem com seu design 🎨.
+3. Você perde horas sobrescrevendo CSS com `!important` ⚔️.
+4. O bundle size aumenta em 500kb 📉.
+5. O Lighthouse reclama de acessibilidade e TBT 🚨.
 
-- 😫 **Acessibilidade (a11y)**: Gerenciar Focus Traps, atributos ARIA e navegação por teclado é complexo e propenso a erros.
-- 🐌 **Performance**: Hydration Mismatches, Layout Shifts (CLS) e Main Thread Blocking (TBT) matam a experiência do usuário.
-- 🖥️ **SSR vs Client**: Sincronizar estados entre servidor e cliente sem "piscar" a tela é um desafio constante.
+**A StructureUI inverte esse jogo.**
 
-**StructureUI resolve isso.** Nós fornecemos o **Cérebro** (Lógica, Estado, Acessibilidade); você fornece a **Pele** (CSS, Tailwind, Sass).
+Nós acreditamos que **Comportamento** e **Estilo** devem ser separados.
+- **Nós cuidamos da Engenharia**: Focus traps, portais, sincronização SSR, lazy hydration, virtualização e ARIA attributes.
+- **Você cuida da Arte**: Use Tailwind, CSS Modules, Sass ou Styled Components. Sem conflitos, sem overrides.
+
+### O que você ganha "de graça":
+- 🛡️ **Segurança SSR**: Seus IDs nunca mais vão quebrar a hidratação do Nuxt.
+- ⚡ **Performance Nativa**: Componentes que sabem quando carregar (Lazy) e como renderizar listas infinitas (Virtual).
+- ♿ **Acessibilidade de Elite**: Navegação por teclado e leitores de tela funcionam "out of the box".
+- 🧩 **Liberdade Total**: Mude seu Design System inteiro sem tocar na lógica dos componentes.
 
 ---
 
